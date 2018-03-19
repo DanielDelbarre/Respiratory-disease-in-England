@@ -4,4 +4,4 @@ This is a project which uses publically available National Health Service (NHS) 
 
 [The project report, with integrated SQL and R code, and figures can be found by clicking here.](Respiratory_disease_England.md)
 
-![alt text](Respiratory-disease-urban-areas/Respiratory_disease_England_files/figure-markdown_github/unnamed-chunk-17-1.png)
+![alt text](Respiratory_disease_England_files/figure-markdown_github/unnamed-chunk-17-1.png?raw=true)
