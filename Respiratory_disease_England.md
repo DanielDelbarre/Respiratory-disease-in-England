@@ -49,7 +49,7 @@ LOAD DATA LOCAL INFILE '/XXX/gp-reg-pat-prac-quin-age-nov-17.csv'
     (@dummy, @dummy, org_type, org_code, @dummy, postcode, sex, age, no_patients);
 ```
 
-The next table will contain some more detailed information about the practices. I only really need one piece of information, which is the status of the practice (as some may practices have closed down but they could still be issuing old prescriptions).
+The next table will contain some more detailed information about the practices. I only really need one piece of information, which is the status of the practice (as some practices may have closed down but they could still be issuing old prescriptions).
 
 ``` sql
 CREATE TABLE practices (
@@ -547,7 +547,7 @@ ggplot() +
 
 <img src="Respiratory_disease_England_files/figure-markdown_github/unnamed-chunk-17-1.png" width="900px" />
 
-This is quite interesting, and there seems to be some pattern to the data here.The clumps of data points represent large towns and cities. London, for example, has a high concentration of practices. However, the proportion of prescriptions for asthma/COPD medications seems to be quite low in London, which is not what I expected to find. The proportion of asthma/COPD prescriptions seems to be increasing towards the north of the country, so maybe there is some relationship between latitude and the proportion of prescriptions? Some rural areas also appear to have relatively high proportions of respiratory prescriptions (e.g East Anglia), so other factors may be having a considerable effect.
+This is quite interesting, and there seems to be some pattern to the data here. The clumps of data points represent large towns and cities. London, for example, has a high concentration of practices. However, the proportion of prescriptions for asthma/COPD medications seems to be quite low in London, which is not what I expected to find. The proportion of asthma/COPD prescriptions seems to be increasing towards the north of the country, so maybe there is some relationship between latitude and the proportion of prescriptions? Some rural areas also appear to have relatively high proportions of respiratory prescriptions (e.g East Anglia), so other factors may be having a considerable effect.
 
 Is there a relationhip between latitude and the prevalence of respiratory disease?
 ----------------------------------------------------------------------------------
