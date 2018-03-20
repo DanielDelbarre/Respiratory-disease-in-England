@@ -198,7 +198,7 @@ hist(nhs_data2$presc_per_pat, breaks = 15, main = NULL, col = "red", xlab = "Pre
 
 <img src="Respiratory_disease_England_files/figure-markdown_github/unnamed-chunk-4-1.png" width="900px" />
 
-This is better but there are still a lot of practices prescribing a large number of prescriptions per patient -- some practices are issuing enough prescriptions for each patient to have 22 a month -- while some others are hardly issuing any precriptions (e.g. 0.4% of patients received a prescription at one practice). Maybe some GPs were closed for part of the month, or have an on-site clinic that issues prescriptions for non-registered patients. These practices are atypical and are going to distort the dataset. I'm going to use a method called Tukey's Fences, which detects outliers using quantiles and the interquartile range:
+This is better but there are still a lot of practices prescribing a large number of prescriptions per patient -- some practices are issuing enough prescriptions for each patient to have 22 a month -- while some others are hardly issuing any prescriptions (e.g. 0.4% of patients received a prescription at one practice). Maybe some GPs were closed for part of the month, or have an on-site clinic that issues prescriptions for non-registered patients. These practices are atypical and are going to distort the dataset. I'm going to use a method called Tukey's Fences, which detects outliers using quantiles and the interquartile range:
 
 *Q*1 − *k*(*Q*3 − *Q*1)
  and
