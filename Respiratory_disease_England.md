@@ -1,4 +1,4 @@
-Respiratory disease and urban areas (England)
+Chronic respiratory disease in England
 ================
 Daniel Delbarre
 5/3/2018
@@ -15,7 +15,7 @@ Using publicily available data from the National Health Service (NHS), I am goin
 Data retrieval and initial processing (MySQL)
 =============================================
 
-I am going to use three datasets, all of which are available from the [UK government's public data repository](https://data.gov.uk). The data I will be using is from November 2017 -- the more recently available data. The three data sets I will use are as follows:
+I am going to use three datasets, all of which are available from the [UK government's public data repository](https://data.gov.uk). The data I will be using is from November 2017 -- the most recently available data. The three data sets I will use are as follows:
 
 -   [List of medical practices in England and Wales](https://data.gov.uk/dataset/england-nhs-connecting-for-health-organisation-data-service-data-files-of-general-medical-practices)
 -   [Number of patients registered at each medical practice, November 2017](https://data.gov.uk/dataset/numbers_of_patients_registered_at_a_gp_practice/resource/75ef591b-a8b9-4c54-af0a-b7730b745a8f)
@@ -175,7 +175,7 @@ hist(nhs_data$presc_per_pat, breaks = 15, col = "red", xlab = "Prescriptions per
 
 <img src="Respiratory_disease_England_files/figure-markdown_github/unnamed-chunk-2-1.png" width="900px" />
 
-Something is not right here -- the data is highly skewed. My guess is that the extreme values which are skewing the data (i.e. &gt; 150 prescriptions per patients) are from the practices with very small patient numbers. These practices do not seem to be your typical GP practice and might need to be removed from the dataset.
+Something is not right here -- the data is highly skewed. My guess is that the extreme values which are skewing the data (i.e. &gt; 150 prescriptions per patient) are from practices with very small patient numbers. These practices do not seem to be your typical GP practice and might need to be removed from the dataset.
 
 ``` r
 nhs_data[which(nhs_data$presc_per_pat > 150),]
@@ -335,7 +335,7 @@ This data is positively skewed, with a few practices prescribing a larger number
 
 ``` r
 hist(log10(nhs_data_corrected$inh_presc_per_pat), col = "red", breaks = 20, main = NULL, xlab = expression(atop(Log[10]~"proportion of prescriptions for"," asthma/COPD medication per patient")))
-hist(sqrt(nhs_data_corrected$inh_presc_per_pat), col = "red", breaks = 20, main = NULL, xlab = expression(sqrt(atop("proportion of prescriptions for", " asthma/COPD medication per patient"))))
+hist(sqrt(nhs_data_corrected$inh_presc_per_pat), col = "red", breaks = 20, main = NULL, xlab = expression(sqrt(atop("Proportion of prescriptions for", " asthma/COPD medication per patient"))))
 ```
 
 <img src="Respiratory_disease_England_files/figure-markdown_github/unnamed-chunk-10-1.png" width="900px" />
@@ -442,7 +442,7 @@ for (i in 1:nrow(practice_dist_mat)) {
   pract_dist[i] = a[-which(a == 0)][1]
 }
 par(mfrow = c(1,1))
-plot(nhs_data_corrected$sqrt_inh_presc_per_pat ~ pract_dist, cex = 0.5, xlab = "Distance to next nearest practice (metres)", ylab = expression(sqrt(atop("proportion of prescriptions for asthma/COPD", "medication per patient"))))
+plot(nhs_data_corrected$sqrt_inh_presc_per_pat ~ pract_dist, cex = 0.5, xlab = "Distance to next nearest practice (metres)", ylab = expression(sqrt(atop("Proportion of prescriptions for asthma/COPD", "medication per patient"))))
 ```
 
 <img src="Respiratory_disease_England_files/figure-markdown_github/unnamed-chunk-12-1.png" width="900px" />
@@ -465,7 +465,7 @@ The practice is on the Isles of Scilly, which explains why it is so far away fro
 ``` r
 pract_dist_df <- data.frame(dist = pract_dist, sqrt_prop_inh_presc = nhs_data_corrected$sqrt_inh_presc_per_pat)[-which.max(pract_dist),]
 par(mfrow = c(1,1))
-plot(pract_dist_df, cex = 0.5, xlab = "Distance to next nearest practice (metres)", ylab = expression(sqrt(atop("proportion of prescriptions for asthma/COPD", "medication per patient"))))
+plot(pract_dist_df, cex = 0.5, xlab = "Distance to next nearest practice (metres)", ylab = expression(sqrt(atop("Proportion of prescriptions for asthma/COPD", "medication per patient"))))
 ```
 
 <img src="Respiratory_disease_England_files/figure-markdown_github/unnamed-chunk-14-1.png" width="900px" />
@@ -474,7 +474,7 @@ This is better but the dataset is still highly skewed, and there may be some pro
 
 ``` r
 par(mfrow = c(1,2))
-hist(log10(pract_dist_df$dist), breaks = 20, col = "red", xlab = expression(paste(Log[10], "distance to next nearest practice (metres)", sep = " ")), main = NULL)
+hist(log10(pract_dist_df$dist), breaks = 20, col = "red", xlab = expression(paste(Log[10], " distance to next nearest practice (metres)", sep = " ")), main = NULL)
 hist(sqrt(pract_dist_df$dist), breaks = 20, col = "red", xlab = expression(sqrt("Distance to next nearest practice (metres)")), main = NULL)
 ```
 
@@ -508,7 +508,7 @@ summary(pract_dist_lm)
 
 ``` r
 par(mfrow = c(1,1))
-plot(pract_dist_df$sqrt_prop_inh_presc ~ log10(pract_dist_df$dist), cex = 0.5, xlab = expression(paste(Log[10], " distance to next nearest practice (metres)", sep = " ")), ylab = expression(sqrt(atop("proportion of prescriptions for asthma/COPD", "medication per patient"))))
+plot(pract_dist_df$sqrt_prop_inh_presc ~ log10(pract_dist_df$dist), cex = 0.5, xlab = expression(paste(Log[10], " distance to next nearest practice (metres)", sep = " ")), ylab = expression(sqrt(atop("Proportion of prescriptions for asthma/COPD", "medication per patient"))))
 abline(pract_dist_lm, lwd = 2, col = "red")
 ```
 
@@ -555,7 +555,7 @@ Is there a relationhip between latitude and the prevalence of respiratory diseas
 I am going to have a look at the relationship between proportion of prescriptions for asthma/COPD medication per patient and latitude. I'll start by producing a plot of this data.
 
 ``` r
-plot(nhs_data_corrected$lat, nhs_data_corrected$sqrt_inh_presc_per_pat, cex = 0.5, xlab = "Latitude", ylab = expression(sqrt(atop("proportion of prescriptions for asthma/COPD", "medication per patient"))))
+plot(nhs_data_corrected$lat, nhs_data_corrected$sqrt_inh_presc_per_pat, cex = 0.5, xlab = "Latitude", ylab = expression(sqrt(atop("Proportion of prescriptions for asthma/COPD", "medication per patient"))))
 ```
 
 <img src="Respiratory_disease_England_files/figure-markdown_github/unnamed-chunk-18-1.png" width="900px" />
@@ -584,7 +584,7 @@ After a polynomial of degree 14, there seems to be little benefit (reduction in 
 lat_inh_lm <- lm(sqrt_inh_presc_per_pat ~ poly(lat, 14), data = nhs_data_corrected)
 x = seq(min(nhs_data_corrected$lat), max(nhs_data_corrected$lat), 0.05)
 lat_inh_lm_pred <- predict(lat_inh_lm, newdata = list(lat = x), type = "response")
-plot(nhs_data_corrected$lat, nhs_data_corrected$sqrt_inh_presc_per_pat, cex = 0.5, xlab = "Latitude", ylab = expression(sqrt(atop("proportion of prescriptions for asthma/COPD", "medication per patient"))))
+plot(nhs_data_corrected$lat, nhs_data_corrected$sqrt_inh_presc_per_pat, cex = 0.5, xlab = "Latitude", ylab = expression(sqrt(atop("Proportion of prescriptions for asthma/COPD", "medication per patient"))))
 lines(x, lat_inh_lm_pred, lwd = 2, col = "red")
 ```
 
@@ -623,7 +623,7 @@ a <- summary(places_filtered$avg_lat)
 ggplot(data = places_filtered[1:25,], aes(x = reorder(place_names, -avg_prop_inh_presc), y = avg_prop_inh_presc, fill = avg_lat)) +
   geom_bar(stat = 'identity') +
   scale_fill_gradientn(colours =  c("dodgerblue", "limegreen", "yellow", "darkorange", "red"), limits = a[c(1,6)]) +
-  labs(y = expression(sqrt(atop("proportion of prescriptions for asthma/COPD", "medication per patient"))), fill = "Latitude") +
+  labs(y = expression(sqrt(atop("Proportion of prescriptions for asthma/COPD", "medication per patient"))), fill = "Latitude") +
   scale_x_discrete(expand = c(0,0)) +
   scale_y_continuous(expand = c(0,0)) +
   coord_cartesian(ylim = c(0.15, 0.4)) +
@@ -645,7 +645,7 @@ places_rows <- nrow(places_filtered)
 ggplot(data = places_filtered[(places_rows-25):places_rows,], aes(x = reorder(place_names, -avg_prop_inh_presc), y = avg_prop_inh_presc, fill = avg_lat)) +
   geom_bar(stat = 'identity') +
   scale_fill_gradientn(colours =  c("dodgerblue", "limegreen", "yellow", "darkorange", "red"), limits = a[c(1,6)]) +
-  labs(y = expression(sqrt(atop("proportion of prescriptions for asthma/COPD", "medication per patient"))), fill = "Latitude") +
+  labs(y = expression(sqrt(atop("Proportion of prescriptions for asthma/COPD", "medication per patient"))), fill = "Latitude") +
   scale_x_discrete(expand = c(0,0)) +
   scale_y_continuous(expand = c(0,0)) +
   coord_cartesian(ylim = c(0.15, 0.4)) +
@@ -668,4 +668,4 @@ Summary
 -   When England is taken as a whole there is not a strong relationship between how urban an area is and the proportion of prescriptions that are issued for asthma/COPD medications per patient.
 -   There is a lot of localised variation in the proportion of prescriptions that are issued for asthma/COPD medications per patient across different localities in England.
 -   Generally, in northern areas of England, and in the larger cities in particular, more asthma/COPD medications are prescribed.
--   Areas of England where fewer medications for asthma/COPD are prescribed, typically seem to be affluent areas. Although this was not directly investigated here, the link between class and the type of work people undertake may have a more direct impact on the prevalence of chronic respiratory disease than pollution.
+-   Areas of England where fewer medications for asthma/COPD are prescribed typically seem to be affluent areas. Although this was not directly investigated here, the link between class and the type of work people undertake may have a more direct impact on the prevalence of chronic respiratory disease than pollution.
